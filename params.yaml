@@ -1,0 +1,5 @@
+data_storing:
+  dimension: 3072
+  collection_name: docs
+  contexts: []
+  sources: []

@@ -1,0 +1,30 @@
+data_ingestion:
+  data_folder: data/pdfs
+  EMBED_MODEL: gemini-embedding-001
+
+# 1. Models Configuration
+models:
+  - type: main
+    engine: openai
+    parameters:
+      base_url: "https://openrouter.ai/api/v1"
+      model: "nvidia/nemotron-nano-9b-v2:free"
+
+# 2. Rails Configuration
+rails:
+  dialog:
+    user_messages:
+      embeddings_only: True
+      
+  input:
+    flows:
+      - check_math_topic
+  output:
+    flows:
+      - check_refusal
+
+# 3. Prompts (Defines the message for "bot refuse to answer")
+prompts:
+  - task: refuse_to_answer
+    content: |
+      I'm sorry, I am a mathematical assistant. I can only help with questions related to math.

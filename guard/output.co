@@ -1,0 +1,11 @@
+# Define a flow to check the bot's final generated answer
+flow check_refusal
+  # Check if the bot's message looks like a standard LLM refusal
+  if $bot_message =~ "I'm sorry" or \
+     $bot_message =~ "I cannot answer" or \
+     $bot_message =~ "I am not programmed to" or \
+     $bot_message =~ "I don't have enough information" or \
+     $bot_message =~ "I don't know"
+
+    # If it is, override it with a clean, standard response.
+    bot respond "I was unable to find a reliable answer for this question."
