@@ -11,6 +11,7 @@ class DataLoader:
         self.config = config
         self.splitter = SentenceSplitter(chunk_size=100, chunk_overlap=20)
         self.client = genai.Client()
+        self._query_cache = {}  # Initialize in-memory cache for query embeddings
 
     def load_and_chunk_pdf(self, filename: Path):
         filename = self.config.docs / filename.name
@@ -33,6 +34,12 @@ class DataLoader:
         return [item.values for item in response.embeddings]
 
     def embed_query(self, query: str):
+        # Check cache first
+        if query in self._query_cache:
+            logger.info(f"Query embedding cache hit for: '{query[:50]}...'")
+            return self._query_cache[query]
+
+        logger.info(f"Query embedding cache miss. Embedding: '{query[:50]}...'")
         response = self.client.models.embed_content(
             model=self.config.EMBED_MODEL,
             contents=[query],
@@ -40,4 +47,7 @@ class DataLoader:
                 "task_type": "RETRIEVAL_QUERY",
             },
         )
-        return response.embeddings[0].values
+        embedding = response.embeddings[0].values
+        # Store in cache
+        self._query_cache[query] = embedding
+        return embedding

@@ -8,12 +8,11 @@ ipywidgets
 langchain-core
 langchain-openai
 langchain
-llama-index-core
-llama-index-readers-file
 python-box
 python-dotenv
 qdrant-client
-starlette
 fastapi-cors
-guardrails-ai
+guardrails-ai == 0.6.7
 langgraph
+langchain-mcp-adapters
+langchain-community

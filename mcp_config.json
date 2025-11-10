@@ -1,0 +1,6 @@
+{
+    "firecrawl-mcp": {
+        "transport": "streamable_http",
+        "url": "http://localhost:3000/mcp"
+    }
+}

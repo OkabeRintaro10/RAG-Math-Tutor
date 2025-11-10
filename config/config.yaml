@@ -8,7 +8,7 @@ models:
     engine: openai
     parameters:
       base_url: "https://openrouter.ai/api/v1"
-      model: "nvidia/nemotron-nano-9b-v2:free"
+      model: "mistralai/mistral-small-3.1-24b-instruct:free"
 
 # 2. Rails Configuration
 rails:
