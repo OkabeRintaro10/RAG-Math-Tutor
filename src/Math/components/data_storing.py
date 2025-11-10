@@ -106,10 +106,8 @@ class QdrantStorage:
                     if source:
                         sources.add(source)
 
-            logger.info(
-                f"Found {len(contexts)} results. "
-                f"Top score: {scores[0]:.3f if scores else 0.0}"
-            )
+            top_score = scores[0] if scores else 0.0
+            logger.info(f"Found {len(contexts)} results.Top score: {top_score:.3f}")
 
             return {"contexts": contexts, "sources": list(sources), "scores": scores}
 

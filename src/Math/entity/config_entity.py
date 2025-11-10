@@ -38,6 +38,7 @@ class GraphState:
     history: list[str] = field(default_factory=list)
     summary: str = ""
     history_tokens: int = 0
+    is_web_search_result: bool = False  # Flag for self-improving RAG
     # Provide a 'default_factory' for mutable types like lists
 
 
@@ -47,6 +48,7 @@ class AskRequest:
 
     question: str
     interaction_id: str | None = None
+    history: list[dict] | None = None
 
 
 @dataclass

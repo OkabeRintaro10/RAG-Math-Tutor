@@ -62,6 +62,7 @@ async def http_ask_query(request: AskRequest) -> AskResponse:
     logger.info("Received question for /ask: %s", request.question[:100])
 
     question = request.question
+    chat_history = request.history or []
     if not question or not question.strip():
         raise HTTPException(
             status_code=400,
@@ -73,7 +74,7 @@ async def http_ask_query(request: AskRequest) -> AskResponse:
 
     try:
         # Use the pipeline's query method
-        result = await rag_pipeline.query(question)
+        result = await rag_pipeline.query(question, history=chat_history)
 
         # Extract response
         generation = result.get(
@@ -257,5 +258,5 @@ inngest.fast_api.serve(
     app,
     inngest_client,
     # Pass the bound methods directly - they're already registered
-    [rag_pipeline._rag_ingest_pdf, rag_pipeline._rag_query_pdf_ai],
+    [rag_pipeline._rag_ingest_pdf_fn, rag_pipeline._rag_query_pdf_ai_fn],
 )
